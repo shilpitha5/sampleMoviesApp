@@ -36,6 +36,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -64,4 +67,10 @@ dependencies {
     implementation libs.viewmodel
     implementation libs.livedata
     implementation libs.lifecycle
+
+    // Shimmer Effect
+    implementation libs.shimmer
+
+    // Image loading library
+    implementation libs.glide
 }

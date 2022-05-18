@@ -16,7 +16,7 @@ data class TrendingResult(
     @SerialName("popularity")
     val popularity: Float = 0F,
     @SerialName("poster_path")
-    val posterPath: String?,
+    val poster_path: String,
     @SerialName("backdrop_path")
-    val backdropPath: String?,
+    val backdropPath: String,
 )
