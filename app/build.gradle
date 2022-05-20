@@ -1,19 +1,26 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.0'
 }
 
 android {
-    compileSdk 32
+    compileSdk 31
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
     defaultConfig {
         applicationId "com.example.movieapp"
         minSdk 21
-        targetSdk 32
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_KEY", "\"${properties.getProperty("TMDB_API_KEY")}\"")
     }
 
     buildTypes {
@@ -29,15 +36,41 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation libs.core
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    implementation libs.test.junit
+    implementation libs.test.espresso.core
+
+    // kotlin serialization
+    implementation libs.serialization
+
+    // Networking
+    implementation libs.retrofit2
+    implementation libs.okhttp
+    implementation libs.logging
+    implementation libs.retrofit.converter
+
+    // Hilt
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
+
+    // coroutine
+    implementation libs.viewmodel
+    implementation libs.livedata
+    implementation libs.lifecycle
+
+    // Shimmer Effect
+    implementation libs.shimmer
+
+    // Image loading library
+    implementation libs.glide
 }
